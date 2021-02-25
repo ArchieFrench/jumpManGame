@@ -1,0 +1,91 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0fdbff;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+.sky {
+  width: 100vw;
+  height: 650px;
+  display: flex;
+}
+
+.container {
+  width: 100vw;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.hud {
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  opacity: 1;
+}
+
+.game {
+  z-index: 1;
+  position: absolute;
+}
+
+.title {
+  font-size: 100pt;
+}
+
+.startGame {
+  margin-top: 10vh;
+  font-size: 60pt;
+}
+
+
+.characterModel {
+  width: 2vw;
+  height: 100px;
+  background-color: white;
+  color: black;
+  position: relative;
+  left: 5vw;
+  top: 550px;
+  text-align: right;
+  transition: transform 0.5s ease;
+}
+
+.obj {
+  width: 2vw;
+  height: 100px;
+  background-color: crimson;
+  position: relative;
+  top: 550px;
+  left: 95vw;
+}
+
+.ground {
+  width: 100vw;
+  height: 15.4vh;
+  background-color: brown;
+
+}
+
+iframe {
+  display: none;
+}
