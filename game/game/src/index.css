@@ -16,10 +16,6 @@ code {
     monospace;
 }
 
-* {
-  box-sizing: inherit;
-}
-
 .sky {
   width: 100vw;
   height: 650px;
@@ -70,12 +66,21 @@ code {
   transition: transform 0.5s ease;
 }
 
-.obj {
+.obj1 {
   width: 2vw;
   height: 100px;
   background-color: crimson;
   position: relative;
   top: 550px;
+  left: 95vw;
+}
+
+.obj2 {
+  width: 2vw;
+  height: 100px;
+  background-color: greenyellow;
+  position: relative;
+  top: 475px;
   left: 95vw;
 }
 

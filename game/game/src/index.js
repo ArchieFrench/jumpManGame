@@ -13,29 +13,44 @@ class Character extends React.Component {
       xPos: 100,
       vw: 'vw',
       yPos: 550,
+      height: 100,
       score: 0,
       timeoutId: 0,
       gameOver: false,
       gameStarted: false,
       gameLoopTimeout: 50,
       display: "none",
-      startTextOpacity: 1
+      startTextOpacity: 1,
+      text: "Press e to start",
+      type: "obj1",
+      duck: false
     }
 
   }
 
+  /**
+   * Moves the player down, by gravity or when a key is pressed
+   * @param {how much the player moves down} amount 
+   */
   down(amount) {
     if (this.state.yPos + amount <= 550) {
       this.setState(
         {yPos: this.state.yPos + amount}
       );
-    } else {
+    } else{
       this.setState(
         {yPos: 550}
       );
     }
   }
 
+  duck() {
+    this.setState(
+      {height: 75,
+        yPos: 575,
+        duck: true}
+    );
+  }
 
 
   handleKeyUp = (event) => {
@@ -44,7 +59,8 @@ class Character extends React.Component {
         case 69:
           this.setState(
             {gameStarted: true,
-            startTextOpacity: 0}
+            startTextOpacity: 0,
+            text: "Game Over"}
           );
           break;
         case 32:
@@ -62,8 +78,10 @@ class Character extends React.Component {
           }
             break;
         case 83:
-          if (this.state.gameStarted) {
+          if (this.state.gameStarted & (this.state.yPos != 550)) {
             this.down(250);
+          } else if (this.state.gameStarted) {
+            this.duck();
           }
           break;
         default:
@@ -83,7 +101,21 @@ class Character extends React.Component {
   }
 
   gravity() {
-    this.down(10);
+    this.down(20);
+  }
+
+  rngObj() {
+    var prob = Math.random();
+
+    if (prob < 0.50) {
+      this.setState(
+        {type: "obj1"}
+      );
+    } else {
+      this.setState(
+        {type: "obj2"}
+      );
+    }
   }
 
   objMove() {
@@ -92,9 +124,10 @@ class Character extends React.Component {
         {xPos: 100,
         score: this.state.score + 1}
       );
+      this.rngObj();
     } else {
       this.setState(
-        {xPos: this.state.xPos - ((this.state.score * Math.random()) + 1)}
+        {xPos: this.state.xPos - ((this.state.score * 0.1) + 1)}
       );
     }
   }
@@ -104,7 +137,8 @@ class Character extends React.Component {
       if (this.state.yPos >= 450) {
         this.setState(
           {gameOver: true,
-          display: "inherit"}        
+          display: "inherit",
+          startTextOpacity: 1}        
         );
       }
     }
@@ -140,14 +174,14 @@ class Character extends React.Component {
       <div class="container">
         <div class="hud">
           <div class="title">{this.state.score}</div>
-          <div class="startGame" style={{opacity: this.state.startTextOpacity}}>Press e to start</div>
+          <div class="startGame" style={{opacity: this.state.startTextOpacity}}>{this.state.text}</div>
         </div>
         <div class="game"> 
           <div class="sky">
-            <div class="characterModel" style={{top: this.state.yPos}}>
+            <div class="characterModel" style={{top: this.state.yPos, height: this.state.height}}>
               0-0
             </div>
-            <div class="obj" style={{left: this.state.xPos + this.state.vw}}>
+            <div className={this.state.type} style={{left: this.state.xPos + this.state.vw}}>
               00
             </div>
           </div>
