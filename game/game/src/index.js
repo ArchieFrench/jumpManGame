@@ -33,13 +33,13 @@ class Character extends React.Component {
    * @param {how much the player moves down} amount 
    */
   down(amount) {
-    if (this.state.yPos + amount <= 550) {
-      this.setState(
-        {yPos: this.state.yPos + amount}
-      );
-    } else{
+    if (this.state.yPos + amount > 550 & (this.state.duck === false)) {
       this.setState(
         {yPos: 550}
+      );
+    } else if (this.state.yPos + amount <= 550) {
+      this.setState(
+        {yPos: this.state.yPos + amount}
       );
     }
   }
@@ -52,8 +52,23 @@ class Character extends React.Component {
     );
   }
 
-
   handleKeyUp = (event) => {
+    if (!this.state.gameOver) {
+      switch( event.keyCode ) {
+        case 83:
+          this.setState(
+            {duck: "false",
+            height: 100,
+            yPos: 550}
+          );
+        break;
+        default:
+          break;
+      }
+    }
+  }
+
+  handleKeyDown = (event) => {
     if (!this.state.gameOver) {
       switch( event.keyCode ) {
         case 69:
@@ -91,13 +106,15 @@ class Character extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener('keydown', this.handleKeyUp);
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keyup', this.handleKeyUp);
     this.gameLoop();
   }
 
 
   componentWillUnmount(){
-
+    window.removeEventListener('keyup', this.handleKeyUp);
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   gravity() {
@@ -133,8 +150,14 @@ class Character extends React.Component {
   }
 
   isGameOver() {
-    if (this.state.xPos <= 5 && (this.state.xPos >= 3)) {
-      if (this.state.yPos >= 450) {
+    if (this.state.xPos <= 5 & (this.state.xPos >= 3)) {
+      if (this.state.yPos >= 450 & (this.state.type == "obj1")) {
+        this.setState(
+          {gameOver: true,
+          display: "inherit",
+          startTextOpacity: 1}        
+        );
+      } else if (this.state.yPos - 100 < 475 & (this.state.type == "obj2")) {
         this.setState(
           {gameOver: true,
           display: "inherit",
@@ -186,6 +209,7 @@ class Character extends React.Component {
             </div>
           </div>
           <div class="ground"></div>
+          <h1>{this.state.duck}</h1>
         </div>
       </div>
     );
