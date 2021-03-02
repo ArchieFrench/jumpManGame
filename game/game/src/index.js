@@ -125,13 +125,21 @@ class Character extends React.Component {e
   rngObj() {
     var prob = Math.random();
 
-    if (prob < 0.50) {
+    if (prob < 0.25) {
       this.setState(
         {type: "obj1"}
       );
-    } else {
+    } else if (prob < 0.50) {
       this.setState(
         {type: "obj2"}
+      );
+    } else if (prob < 0.75){
+      this.setState(
+        {type: "obj3"}
+      );
+    } else {
+      this.setState(
+        {type: "noObj"}
       );
     }
   }
@@ -152,13 +160,19 @@ class Character extends React.Component {e
 
   isGameOver() {
     if (this.state.xPos <= 5 & (this.state.xPos >= 3)) {
-      if (this.state.yPos >= 450 & (this.state.type == "obj1")) {
+      if (this.state.yPos >= 550 & (this.state.type == "obj1")) {
         this.setState(
           {gameOver: true,
           display: "inherit",
           startTextOpacity: 1}        
         );
-      } else if (this.state.yPos - 100 < 475 & (this.state.type == "obj2")) {
+      } else if (!(540 < this.state.yPos < 575) & (this.state.type == "obj2")) {
+        this.setState(
+          {gameOver: true,
+          display: "inherit",
+          startTextOpacity: 1}        
+        );
+      } else if (this.state.yPos[2] >= 450 & (this.state.type == "obj3")) {
         this.setState(
           {gameOver: true,
           display: "inherit",
@@ -206,6 +220,15 @@ class Character extends React.Component {e
               0-0
             </div>
             <div className={this.state.type} style={{left: this.state.xPos + this.state.vw}}>
+              00
+            </div>
+            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
+              00
+            </div>
+            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
+              00
+            </div>
+            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
               00
             </div>
           </div>

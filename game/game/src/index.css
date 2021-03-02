@@ -9,6 +9,7 @@ body {
   background-color: #0fdbff;
   box-sizing: border-box;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 code {
@@ -68,25 +69,39 @@ code {
 
 .obj1 {
   width: 2vw;
-  height: 100px;
+  height: 50px;
   background-color: crimson;
   position: relative;
-  top: 550px;
+  top: 600px;
+  left: 95vw;
+}
+
+
+.obj3 {
+  width: 2vw;
+  height: 35px;
+  background-color: pink;
+  position: relative;
+  top: 565px;
   left: 95vw;
 }
 
 .obj2 {
   width: 2vw;
-  height: 100px;
+  height: 35px;
   background-color: greenyellow;
   position: relative;
-  top: 475px;
+  top: 540px;
   left: 95vw;
+}
+
+.noObj {
+  display: none;
 }
 
 .ground {
   width: 100vw;
-  height: 15.4vh;
+  height: 100vh;
   background-color: brown;
 
 }
