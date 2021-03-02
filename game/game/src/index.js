@@ -11,7 +11,7 @@ class Character extends React.Component {e
     super(props);
 
     this.state = {
-      xPos: 100,
+      xPos: [100, 125, 150, 175],
       vw: 'vw',
       yPos: 550,
       height: 100,
@@ -23,7 +23,7 @@ class Character extends React.Component {e
       display: "none",
       startTextOpacity: 1,
       text: "Press e to start",
-      type: "obj1",
+      type: ["obj1", "obj2", "obj3", "noObj"],
       duck: false
     }
 
@@ -122,39 +122,48 @@ class Character extends React.Component {e
     this.down(20);
   }
 
-  rngObj() {
+  rngObj(index) {
     var prob = Math.random();
+    const types = this.state.type;
 
     if (prob < 0.25) {
-      this.setState(
-        {type: "obj1"}
-      );
+      types[index] = "obj1"
     } else if (prob < 0.50) {
-      this.setState(
-        {type: "obj2"}
-      );
+      types[index] = "obj2"
     } else if (prob < 0.75){
-      this.setState(
-        {type: "obj3"}
-      );
+      types[index] = "obj3"
     } else {
-      this.setState(
-        {type: "noObj"}
-      );
+      types[index] = "noObj"
     }
+
+    this.setState(
+      {type: types}
+    );
   }
 
   objMove() {
-    if (this.state.xPos < 0) {
-      this.setState(
-        {xPos: 100,
-        score: this.state.score + 1}
-      );
-      this.rngObj();
-    } else {
-      this.setState(
-        {xPos: this.state.xPos - ((this.state.score * 0.1) + 1)}
-      );
+    for(var i = 0; i < 4; i++) {
+      const xPositions = this.state.xPos;
+      var scores = this.state.score;
+
+      if (xPositions[i] < 0) {
+
+        //ERROR LIKELY WHEN THIS SECTION RUNS
+        xPositions[i] = 100;
+        scores++;
+
+        this.setState(
+          {xPos: xPositions,
+          score: scores}
+        );
+
+        this.rngObj(i);
+      } else {
+        xPositions[i] = xPositions[i] - ((scores * 0.1) + 1)
+        this.setState(
+          {xPos: xPositions}
+        );
+      }
     }
   }
 
@@ -197,8 +206,6 @@ class Character extends React.Component {e
       if (!this.state.gameOver && (this.state.gameStarted)) {
         this.gravity();
         this.objMove();
-      } else {
-
       }
 
       this.gameLoop()
@@ -219,16 +226,16 @@ class Character extends React.Component {e
             <div class="characterModel" style={{top: this.state.yPos, height: this.state.height}}>
               0-0
             </div>
-            <div className={this.state.type} style={{left: this.state.xPos + this.state.vw}}>
+            <div className={this.state.type[0]} style={{left: this.state.xPos[0] + this.state.vw}}>
               00
             </div>
-            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
+            <div className={this.state.type[1]} style={{left: (this.state.xPos[1]) + this.state.vw}}>
               00
             </div>
-            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
+            <div className={this.state.type[2]} style={{left: (this.state.xPos[2]) + this.state.vw}}>
               00
             </div>
-            <div className={this.state.type} style={{left: (this.state.xPos) + this.state.vw}}>
+            <div className={this.state.type[3]} style={{left: (this.state.xPos[3]) + this.state.vw}}>
               00
             </div>
           </div>
