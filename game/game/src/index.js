@@ -5,7 +5,8 @@ import reportWebVitals from './reportWebVitals';
 
 
 
-class Character extends React.Component {
+class Character extends React.Component {e
+
   constructor(props) {
     super(props);
 
@@ -33,13 +34,13 @@ class Character extends React.Component {
    * @param {how much the player moves down} amount 
    */
   down(amount) {
-    if (this.state.yPos + amount > 550 & (this.state.duck === false)) {
-      this.setState(
-        {yPos: 550}
-      );
-    } else if (this.state.yPos + amount <= 550) {
+    if (this.state.yPos + this.state.height + amount <= 650) {
       this.setState(
         {yPos: this.state.yPos + amount}
+      );
+    } else {
+      this.setState(
+        {yPos: 650 - this.state.height}
       );
     }
   }
@@ -209,7 +210,6 @@ class Character extends React.Component {
             </div>
           </div>
           <div class="ground"></div>
-          <h1>{this.state.duck}</h1>
         </div>
       </div>
     );
