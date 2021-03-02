@@ -71,7 +71,7 @@ code {
   width: 2vw;
   height: 50px;
   background-color: crimson;
-  position: relative;
+  position: absolute;
   top: 600px;
   left: 95vw;
 }
@@ -81,7 +81,7 @@ code {
   width: 2vw;
   height: 35px;
   background-color: pink;
-  position: relative;
+  position: absolute;
   top: 565px;
   left: 95vw;
 }
@@ -90,7 +90,7 @@ code {
   width: 2vw;
   height: 35px;
   background-color: greenyellow;
-  position: relative;
+  position: absolute;
   top: 540px;
   left: 95vw;
 }

@@ -23,7 +23,7 @@ class Character extends React.Component {e
       display: "none",
       startTextOpacity: 1,
       text: "Press e to start",
-      type: ["obj1", "obj2", "obj3", "noObj"],
+      type: ["obj2", "obj2", "obj3", "obj1"],
       duck: false
     }
 
@@ -147,8 +147,6 @@ class Character extends React.Component {e
       var scores = this.state.score;
 
       if (xPositions[i] < 0) {
-
-        //ERROR LIKELY WHEN THIS SECTION RUNS
         xPositions[i] = 100;
         scores++;
 
@@ -159,7 +157,7 @@ class Character extends React.Component {e
 
         this.rngObj(i);
       } else {
-        xPositions[i] = xPositions[i] - ((scores * 0.1) + 1)
+        xPositions[i] = Math.round(xPositions[i] - ((this.state.score * 0.1) + 1), 3);
         this.setState(
           {xPos: xPositions}
         );
@@ -168,25 +166,29 @@ class Character extends React.Component {e
   }
 
   isGameOver() {
-    if (this.state.xPos <= 5 & (this.state.xPos >= 3)) {
-      if (this.state.yPos >= 550 & (this.state.type == "obj1")) {
-        this.setState(
-          {gameOver: true,
-          display: "inherit",
-          startTextOpacity: 1}        
-        );
-      } else if (!(540 < this.state.yPos < 575) & (this.state.type == "obj2")) {
-        this.setState(
-          {gameOver: true,
-          display: "inherit",
-          startTextOpacity: 1}        
-        );
-      } else if (this.state.yPos[2] >= 450 & (this.state.type == "obj3")) {
-        this.setState(
-          {gameOver: true,
-          display: "inherit",
-          startTextOpacity: 1}        
-        );
+    for(var i = 0; i < 4; i++) {
+      if (this.state.xPos[i] <= 7 & (this.state.xPos[i] >= 5)) {
+        if (this.state.yPos >= 550 & (this.state.type[i] == "obj1")) {
+          this.setState(
+            {gameOver: true,
+            display: "inherit",
+            startTextOpacity: 1}        
+          );
+        } else if (this.state.type[i] == "obj2") {
+          if ((575 < this.state.yPos) & (540 < this.state.yPos)) {
+            this.setState(
+              {gameOver: true,
+              display: "inherit",
+              startTextOpacity: 1}        
+            );
+          }
+        } else if (this.state.yPos >= 450 & (this.state.type[i] == "obj3")) {
+          this.setState(
+            {gameOver: true,
+            display: "inherit",
+            startTextOpacity: 1}        
+          );
+        }
       }
     }
   }
@@ -227,16 +229,16 @@ class Character extends React.Component {e
               0-0
             </div>
             <div className={this.state.type[0]} style={{left: this.state.xPos[0] + this.state.vw}}>
-              00
+              {this.state.xPos[0]}
             </div>
             <div className={this.state.type[1]} style={{left: (this.state.xPos[1]) + this.state.vw}}>
-              00
+              {this.state.xPos[1]}
             </div>
             <div className={this.state.type[2]} style={{left: (this.state.xPos[2]) + this.state.vw}}>
-              00
+              {this.state.xPos[2]}
             </div>
             <div className={this.state.type[3]} style={{left: (this.state.xPos[3]) + this.state.vw}}>
-              00
+              {this.state.xPos[3]}
             </div>
           </div>
           <div class="ground"></div>
