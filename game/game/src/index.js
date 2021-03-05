@@ -175,7 +175,7 @@ class Character extends React.Component {e
             startTextOpacity: 1}        
           );
         } else if (this.state.type[i] == "obj2") {
-          if ((575 < this.state.yPos) & (540 < this.state.yPos)) {
+          if ((575 > this.state.yPos) & (540 < this.state.yPos)) {
             this.setState(
               {gameOver: true,
               display: "inherit",
