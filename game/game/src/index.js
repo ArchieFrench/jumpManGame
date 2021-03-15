@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 
 
-class Character extends React.Component {e
+class Game extends React.Component {
 
   constructor(props) {
     super(props);
@@ -46,6 +46,9 @@ class Character extends React.Component {e
     }
   }
 
+  /*
+  * Makes character duck
+  */
   duck() {
     this.setState(
       {height: 75,
@@ -54,6 +57,11 @@ class Character extends React.Component {e
     );
   }
 
+  /**
+   * KeyListener
+   * s = release duck
+   * @param {} event triggers when key is released
+   */
   handleKeyUp = (event) => {
     if (!this.state.gameOver) {
       switch( event.keyCode ) {
@@ -70,6 +78,13 @@ class Character extends React.Component {e
     }
   }
 
+  /**
+   * KeyListener
+   * w = jump
+   * s = duck/return to ground
+   * e = start game
+   * @param {*} event triggers when key is pressed
+   */
   handleKeyDown = (event) => {
     if (!this.state.gameOver) {
       switch( event.keyCode ) {
@@ -119,10 +134,17 @@ class Character extends React.Component {e
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
+  /**
+   * Pushes character model down every frame
+   */
   gravity() {
     this.down(8);
   }
 
+  /**
+   * Generates object randomly
+   * @param {} index 
+   */
   rngObj(index) {
     var prob = Math.random();
     const types = this.state.type;
@@ -142,6 +164,10 @@ class Character extends React.Component {e
     );
   }
 
+  /**
+   * Moves every object for each frame.
+   * How fast it moves is in relation to the score.
+   */
   objMove() {
     for(var i = 0; i < 4; i++) {
       const xPositions = this.state.xPos;
@@ -170,7 +196,11 @@ class Character extends React.Component {e
     }
   }
 
+  /**
+   * Checks if character has collided with an object
+   */
   isGameOver() {
+    //For each object, check if it's hitbox is colliding with the character
     for(var i = 0; i < 4; i++) {
       if (this.state.xPos[i] <= 7 & (this.state.xPos[i] >= 5) || (this.state.prevXPos[i] >= 5 & (this.state.xPos <=5))) {
         if (this.state.yPos >= 500 & (this.state.type[i] == "obj1")) {
@@ -198,6 +228,10 @@ class Character extends React.Component {e
     }
   }
 
+  /**
+   * Checks if the game has started
+   * @returns if the game has started
+   */
   gameStarted() {
     if (this.state.gameStarted) {
       return true;
@@ -206,6 +240,9 @@ class Character extends React.Component {e
     return false;
   }
 
+  /**
+   * Calls every frame. Used to update screen with positions of objects and the character
+   */
   gameLoop() {
     let timeoutId = setTimeout(() => {
     
@@ -250,7 +287,7 @@ class Character extends React.Component {e
 }
 
 ReactDOM.render(
-  <Character/>,
+  <Game/>,
   document.getElementById('root')
 );
 
