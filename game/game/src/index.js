@@ -12,6 +12,7 @@ class Character extends React.Component {e
 
     this.state = {
       xPos: [100, 125, 150, 175],
+      prevXPos: [100, 125, 150, 175],
       vw: 'vw',
       yPos: 550,
       height: 100,
@@ -19,11 +20,11 @@ class Character extends React.Component {e
       timeoutId: 0,
       gameOver: false,
       gameStarted: false,
-      gameLoopTimeout: 50,
+      gameLoopTimeout: 20,
       display: "none",
       startTextOpacity: 1,
       text: "Press e to start",
-      type: ["obj2", "obj2", "obj3", "obj1"],
+      type: ["obj1", "obj2", "obj3", "obj1"],
       duck: false
     }
 
@@ -119,7 +120,7 @@ class Character extends React.Component {e
   }
 
   gravity() {
-    this.down(20);
+    this.down(8);
   }
 
   rngObj(index) {
@@ -144,9 +145,11 @@ class Character extends React.Component {e
   objMove() {
     for(var i = 0; i < 4; i++) {
       const xPositions = this.state.xPos;
+      const prevXPositions = this.state.prevXPos;
       var scores = this.state.score;
 
       if (xPositions[i] < 0) {
+        prevXPositions[i] = xPositions[i];
         xPositions[i] = 100;
         scores++;
 
@@ -157,9 +160,11 @@ class Character extends React.Component {e
 
         this.rngObj(i);
       } else {
-        xPositions[i] = Math.round(xPositions[i] - ((this.state.score * 0.1) + 1), 3);
+        prevXPositions[i] = xPositions[i];
+        xPositions[i] = xPositions[i] - ((this.state.score * 0.04) + 0.8);
         this.setState(
-          {xPos: xPositions}
+          {xPos: xPositions,
+          prevXPos: prevXPositions}
         );
       }
     }
@@ -167,15 +172,15 @@ class Character extends React.Component {e
 
   isGameOver() {
     for(var i = 0; i < 4; i++) {
-      if (this.state.xPos[i] <= 7 & (this.state.xPos[i] >= 5)) {
-        if (this.state.yPos >= 550 & (this.state.type[i] == "obj1")) {
+      if (this.state.xPos[i] <= 7 & (this.state.xPos[i] >= 5) || (this.state.prevXPos[i] >= 5 & (this.state.xPos <=5))) {
+        if (this.state.yPos >= 500 & (this.state.type[i] == "obj1")) {
           this.setState(
             {gameOver: true,
             display: "inherit",
             startTextOpacity: 1}        
           );
         } else if (this.state.type[i] == "obj2") {
-          if ((575 > this.state.yPos) & (540 < this.state.yPos)) {
+          if ((575 > this.state.yPos) & (440 < this.state.yPos)) {
             this.setState(
               {gameOver: true,
               display: "inherit",
@@ -229,16 +234,12 @@ class Character extends React.Component {e
               0-0
             </div>
             <div className={this.state.type[0]} style={{left: this.state.xPos[0] + this.state.vw}}>
-              {this.state.xPos[0]}
             </div>
             <div className={this.state.type[1]} style={{left: (this.state.xPos[1]) + this.state.vw}}>
-              {this.state.xPos[1]}
             </div>
             <div className={this.state.type[2]} style={{left: (this.state.xPos[2]) + this.state.vw}}>
-              {this.state.xPos[2]}
             </div>
             <div className={this.state.type[3]} style={{left: (this.state.xPos[3]) + this.state.vw}}>
-              {this.state.xPos[3]}
             </div>
           </div>
           <div class="ground"></div>
